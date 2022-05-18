@@ -8,7 +8,7 @@ Why you want to design the Ofu? Cause it's Coooool!!!
 
 ### Program Language might be use
 
-`Python`
+`Javascript`
 
 `C/C++`
 
@@ -49,7 +49,7 @@ Why you want to design the Ofu? Cause it's Coooool!!!
 
    ​			- Runtime
 
-   			- Virtual Machine, VM  like Java
+   ​			- Virtual Machine, VM  like Java
 
 ## design Ofu
 
@@ -214,11 +214,188 @@ For me const& and const* usually  to  decorate variable filed.
 
 So in C++ use the const to decorate a type is not a good design for me.
 
-## Next design step
-
-AST design first.
-
-Then Checker.
 
 
 
+
+## Features
+
+Motivation : To improve C, generate C code.
+
+#### Features in cpp
+
+1. overload : ad hoc polymorphism.
+
+   ```cpp
+   int func(int a){return a;};
+   int func(float b){return b;};
+   std::cout<<3<<"3"；
+   ```
+
+   ​		operator overload ad hoc polymorphism.
+
+2. type infer 
+
+   ```cpp
+   auto x = 3;//type is ?
+   ```
+
+   ```cpp
+   auto x = func(args);
+   ```
+
+3. generics : arguments polymorphism
+
+   ```cpp
+   template<typename T>
+   void print(T x){/*.....*/}
+   ```
+
+   argument not only term, value, but also type
+
+4.  function as first citizen
+
+   function -> term ,value
+
+   ```python
+   def int id(int x):
+       return x
+   ```
+
+   Currying 
+
+    ```pseudocode
+    vector operator+(vector a,vetor b){
+    	/*........*/
+    }
+    ```
+
+   Currying in python
+
+   ```python
+   def func(x,y=3):
+       return x+y
+   
+   func(1,3)#1+3
+   func(1)#func waiting the input of y
+   ```
+
+5. C/Cpp has header and module. relative to generics?
+
+   generics type as arg -> null args-> module
+
+   if args ->
+
+   ```cpp
+   std::map<int,int>;
+   std::vector<int>;
+   std::list<int>;
+   ```
+
+   module -> encapsulation, type
+
+6. subtyping
+
+7. some syntax sugar : dot operator
+
+   ```pseudocode
+   obj.method(3)
+   ```
+
+   => desugar
+
+   ```pseudocode
+   method(obj,3)
+   ```
+
+   virtual method
+
+   ```cpp
+   virtual
+   ```
+
+   virtual pointer-> method                
+
+   ```pseudocode
+   obj ={method : fun(int)->;} 
+   ```
+
+
+
+
+
+### Context Free Grammer,CFG
+
+```LBNF
+S -> S OPER S
+OPER -> +|-|*|/
+	-> 1 + 3
+```
+
+```LBNF
+EXP -> TERM OPER TERM
+_ OPER -> +|-|*|/|<|>|?......
+
+func TERM ->PARA "=>" TERM  
+_ PARA -> NAME,i.e /[a-z][a-zA-Z0-9]*/
+
+call TERM -> TERM TERM // FUNC PARA,Currying is ((func para)para)
+
+name TERM -> NAME //variable name
+variable TERM ->"let" NAME "=" TERM //let x =3
+immutable TERM ->"const" NAME "=" TERM //const x =3
+
+literal TERM -> NUM/[1-9][0-9]*/ // 123
+```
+
+### Abstract Syntax Tree , AST
+
+```js
+const left =({tag:"literal",body:{value:5},type:"Int"}) 
+const right = ({tag:"literal",body:{value:4},type:"Int"})
+const node = ({tag:"binary",body:{left,oper:"+",right}})//5+4
+```
+
+
+
+node
+
+|  \   \
+
+5   +   4
+
+let x = 3
+
+array = [1,2,x]
+
+list= [1;2;x]//linked list
+
+tuple = (x,'x')//(Int,Char)
+
+
+
+ternary 
+
+if cond then fst else snd
+
+cond ? fst : snd
+
+cond : Boolean
+
+fst,snd must to be same Type
+
+#### Name Resolution 
+
+```pseudocode
+let x = 3;
+let y = x+3;
+let f(x)=> x+4//scope 
+```
+
+
+
+#### Symbol Table
+
+#### Lexical Scope
+
+#### Topological Order
