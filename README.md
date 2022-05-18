@@ -2,6 +2,8 @@
 
 The  Ofu Programming Language.
 
+Name from : Ofu and Olosega are parts of a volcanic doublet in the Manu‘a Island Group, which is part of American Samoa in the Samoan Islands.
+
 What is Ofu? A Programming Language I want to make in 2 years. 
 
 Well,maybe I finally turn this project to a `Toy Language`.And only for me.
