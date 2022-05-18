@@ -85,7 +85,7 @@ Generate C code  cover features of C.
 
 
 
-## Ofu
+## EZ Ofu
 
 I want Ofu is EZ to learning.
 
