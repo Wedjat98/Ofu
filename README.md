@@ -10,6 +10,8 @@ Why you want to design the Ofu? Cause it's Coooool!!!
 
 `Javascript`
 
+`python`
+
 `C/C++`
 
 `Objective Caml` (Still learning).
