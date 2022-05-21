@@ -390,7 +390,7 @@ cond : Boolean
 
 fst,snd must to be same Type
 
-#### Name Resolution 
+### Name Resolution 
 
 ```pseudocode
 let x = 3;
@@ -398,10 +398,150 @@ let y = x+3;
 let f(x)=> x+4//scope 
 ```
 
+```LBNF
+func TERM -> PARA "=>" BODY
+name TERM ->NAME
+```
+
+```LBNF
+	  TERM
+	/	|	\
+PARA   "=>"  NAME
+  |			  |
+  x			  x
+```
+
+Two important concepts ：produce&consume
+
+let para  = term -> produce variable
+
+para -> parameters, produce variable
+
+name -> variable used, consume variable
 
 
-#### Symbol Table
 
-#### Lexical Scope
+produce : let ,mut, para
 
-#### Topological Order
+consume : name
+
+lexcial scope : function, block
+
+walk ast -> 
+
+- produce 
+
+  -  Id = ++ Counter
+  - Table[Id] :{tag,name,term}
+  - Name_Map [name]=Id
+
+- consume
+
+  - Id = Name_Map[name]//Table[Id],replace name with Id
+
+- lexical scope
+
+  - old = Name_Map
+
+  - new = copy(old)
+
+  - {Begin
+
+    new...
+
+    }End
+
+    old...
+
+### Symbol Table
+
+Table : name -> Term
+
+```ofu
+let x = 3
+```
+
+It's mean Table['x']=3
+
+```ofu
+let x =3
+let fun = x=>x+1
+```
+
+Table['x']->3?para x? 
+
+*A Complex Implementation*
+
+I will use the id to discriminate the Parameters
+
+**produce will be like :**
+
+Int -> Id
+
+Table[0] = {tag:"let",name:'x',term:3}
+
+Table[1] = {tag: "para",name:'x',term=*undefined*}
+
+### Lexical Scope
+
+Consumption will be like 
+
+```ofu
+let x =3
+let fun = x=>x+1
+let y = x+1
+```
+
+
+
+Name_Map : Name -> Id
+
+nm = {} ---->walk `let x =3` --->
+
+nm={"x=0"} ---->walk `let fun ` --->
+
+nm={"x=2","fun":1,}} ---->walk `x + 1 ` --->
+
+nm['x'] = 2 --> Id =2 -->`let $1 = $2=>$2+1`
+
+ restore nm = {'x':0.'fun':1}  then--->walk `let  y ` --->
+
+ nm = {'x':0.'fun':1,'y'=3}---->walk `x + 1 ` --->
+
+nm{'x'=0}--->Id = 0 -->`let $3 = $0+1`
+
+
+
+### Topological Order
+
+Will be use to Type rich. But if the AST too deep,it will be complex. 
+
+Topological Order -> will be helpful to Type rich turn.
+
+```ofu
+let x :I8 = 5;//let x = 1+2
+
+let y = > 3 + (y+4+x+5);//f : I8->I8
+
+//let tmp = 4+x
+//let f = y =>3+(tmp+y);
+```
+
+#### walk first :
+
+-Name Resolution 
+
+
+
+### DFA=(∑,K,s,F,δ)	
+
+∑ = character set : Unicode [x,y]          if  x<=char<=y   char - Hanzi(Kanji) 
+
+K,s,F = status
+
+δ = status transfer
+
+ 
+
+
+
